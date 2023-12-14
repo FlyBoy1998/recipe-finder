@@ -137,3 +137,69 @@ h1 a:visited {
 .nav-links a:hover {
     color: #808080;
 }
+
+/* SEARCH BAR */
+#search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.25rem;
+    width: 100%;
+    padding: 2rem 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #000;
+}
+
+#search span {
+    font-family: 'Dancing Script', cursive, sans-serif;
+    text-transform: none;
+    font-size: 3rem;
+    font-weight: normal;
+}
+
+.search-form {
+    position: relative;
+    height: 3rem;
+    min-width: 350px;
+    border: 1px solid #808080;
+}
+
+#recipe {
+    height: 100%;
+    width: 100%;
+    padding: 0 0.75rem;
+    border: none;
+    outline: none;
+}
+
+#recipe::placeholder {
+    letter-spacing: 2px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #959595;
+    font-family: 'Dancing Script', cursive, sans-serif;
+}
+
+.search-button {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 4rem;
+    cursor: pointer;
+    background-color: #fff;
+    border: none;
+    color: #323232;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1.2px;
+    font-size: 1.25rem;
+    transition: color 0.3s ease;
+}
+
+.search-button:hover {
+    color: #808080;
+}
