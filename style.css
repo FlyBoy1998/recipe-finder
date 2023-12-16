@@ -112,7 +112,9 @@ h1 a:visited {
 }
 
 .signup-button:hover {
-    background-color: #808080;
+    background-color: #fff;
+    color: #000;
+
 }
 
 .nav-links ul {
