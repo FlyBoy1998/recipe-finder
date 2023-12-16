@@ -248,6 +248,7 @@ h1 a:visited {
 #recipes {
     max-width: 1200px;
     margin: 3rem auto;
+    position: relative;
 }
 
 #recipes h1 {
@@ -265,6 +266,7 @@ h1 a:visited {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     justify-items: center;
+    align-items: center;
     gap: 2rem;
 }
 
@@ -285,6 +287,16 @@ h1 a:visited {
 .recipe-title {
     text-align: center;
     font-size: 1.25rem;
+}
+
+/* LOADER */
+.loader {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    visibility: hidden;
 }
 
 @media screen and (max-width: 1200px) {
@@ -326,6 +338,6 @@ h1 a:visited {
 
 @media screen and (max-width: 692px) {
     .recipe {
-        width: 90%;
+        width: 95%;
     }
 }
