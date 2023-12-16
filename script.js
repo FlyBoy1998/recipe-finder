@@ -7,7 +7,7 @@ const searchButton = document.querySelector('.search-button');
 let userInput = '';
 
 async function fetchData() {
-    recipesContainer.innerHTML = ' ';
+    recipesContainer.innerHTML = 'Loading...';
     const url = `https://api.spoonacular.com/recipes/complexSearch?query=${userInput}&apiKey=${apiKey}&number=24`;
     const response = await fetch(url);
     const data = await response.json();
@@ -22,7 +22,7 @@ async function fetchData() {
                 <h3 class="recipe-title">${title}</h3>
             </div>
         `
-    }).join('');
+    }).join(''); 
     recipesContainer.innerHTML = recipesContent;
 }
 
