@@ -11,7 +11,8 @@ async function fetchData() {
     const response = await fetch(url);
     const data = await response.json();
     const results = data.results;
-    const recipesContent = results.map((recipe) => {
+    console.log(results);
+    const recipesContent = paginate(results)[1].map((recipe) => {
         const {image: imageSrc, title} = recipe;
         return `
             <div class="recipe">
@@ -35,10 +36,12 @@ function searchRecipe(e) {
 function paginate(recipes) {
     const itemsPerPage = 6;
     const numberOfPages = Math.ceil(recipes.length / itemsPerPage);
-    const newRecipes = Array.from({ length: numberOfPages} , (_, index) => {
+    console.log(numberOfPages);
+    const newRecipes = Array.from({ length: numberOfPages } , (_, index) => {
         const start = index * itemsPerPage;
-        return recipes.slice(start, start + numberOfPages);
+        return recipes.slice(start, start + itemsPerPage);
     })
+    console.log(newRecipes);
     return newRecipes;
 }
 
