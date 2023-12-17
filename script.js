@@ -3,10 +3,13 @@ import apiKey from "./api.js";
 const recipeInput = document.getElementById('recipe-search');
 const recipesContainer = document.querySelector('.recipes-container');
 const searchButton = document.querySelector('.search-button');
+const loader = document.querySelector('.loader');
 
 let userInput = '';
 
 async function fetchData() {
+    recipesContainer.innerHTML = '';
+    loader.classList.add('loader-visible');
     const url = `https://api.spoonacular.com/recipes/complexSearch?query=${userInput}&apiKey=${apiKey}&number=24`;
     const response = await fetch(url);
     const data = await response.json();
@@ -23,6 +26,7 @@ async function fetchData() {
             </div>
         `
     }).join('');
+    loader.classList.remove('loader-visible');
     recipesContainer.innerHTML = recipesContent;
 }
 
