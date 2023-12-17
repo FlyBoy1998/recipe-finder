@@ -3,9 +3,12 @@ import apiKey from "./api.js";
 const recipeInput = document.getElementById('recipe-search');
 const recipesContainer = document.querySelector('.recipes-container');
 const searchButton = document.querySelector('.search-button');
+const paginationButtons = document.querySelector('.pagination-buttons');
 const loader = document.querySelector('.loader');
 
 let userInput = '';
+let index = 0;
+let pages = [];
 
 async function fetchData() {
     recipesContainer.innerHTML = '';
@@ -14,8 +17,9 @@ async function fetchData() {
     const response = await fetch(url);
     const data = await response.json();
     const results = data.results;
-    console.log(results);
-    const recipesContent = paginate(results)[1].map((recipe) => {
+    pages = paginate(results);
+    console.log(pages);
+    const recipesContent = pages[index].map((recipe) => {
         const {image: imageSrc, title} = recipe;
         return `
             <div class="recipe">
@@ -28,6 +32,7 @@ async function fetchData() {
     }).join('');
     loader.classList.remove('loader-visible');
     recipesContainer.innerHTML = recipesContent;
+    displayButtons(paginationButtons, pages, index);
 }
 
 function searchRecipe(e) {
@@ -40,13 +45,20 @@ function searchRecipe(e) {
 function paginate(recipes) {
     const itemsPerPage = 6;
     const numberOfPages = Math.ceil(recipes.length / itemsPerPage);
-    console.log(numberOfPages);
     const newRecipes = Array.from({ length: numberOfPages } , (_, index) => {
         const start = index * itemsPerPage;
         return recipes.slice(start, start + itemsPerPage);
     })
-    console.log(newRecipes);
     return newRecipes;
+}
+
+function displayButtons(container, pages, activeIndex) {
+    let btns = pages.map((_, pageIndex) => {
+        return `
+        <button class="page-btn ${activeIndex === pageIndex ? 'active' : 'null'}" data-index='${pageIndex}'">${pageIndex + 1}</button>
+        `
+    })
+    container.innerHTML = btns.join('');
 }
 
 searchButton.addEventListener('click', searchRecipe);
