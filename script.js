@@ -34,10 +34,10 @@ function searchRecipe(e) {
 
 function paginate(recipes) {
     const itemsPerPage = 6;
-    const pages = Math.ceil(recipes.length / itemsPerPage);
-    const newRecipes = Array.from({ length: pages} , (_, index) => {
+    const numberOfPages = Math.ceil(recipes.length / itemsPerPage);
+    const newRecipes = Array.from({ length: numberOfPages} , (_, index) => {
         const start = index * itemsPerPage;
-        return recipes.slice(start, start + pages);
+        return recipes.slice(start, start + numberOfPages);
     })
     return newRecipes;
 }
