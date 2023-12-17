@@ -7,7 +7,6 @@ const searchButton = document.querySelector('.search-button');
 let userInput = '';
 
 async function fetchData() {
-    recipesContainer.innerHTML = 'Loading...';
     const url = `https://api.spoonacular.com/recipes/complexSearch?query=${userInput}&apiKey=${apiKey}&number=24`;
     const response = await fetch(url);
     const data = await response.json();
@@ -22,7 +21,7 @@ async function fetchData() {
                 <h3 class="recipe-title">${title}</h3>
             </div>
         `
-    }).join(''); 
+    }).join('');
     recipesContainer.innerHTML = recipesContent;
 }
 
@@ -31,6 +30,16 @@ function searchRecipe(e) {
     userInput = recipeInput.value;
     console.log(userInput);
     fetchData();
+}
+
+function paginate(recipes) {
+    const itemsPerPage = 6;
+    const pages = Math.ceil(recipes.length / itemsPerPage);
+    const newRecipes = Array.from({ length: pages} , (_, index) => {
+        const start = index * itemsPerPage;
+        return recipes.slice(start, start + pages);
+    })
+    return newRecipes;
 }
 
 searchButton.addEventListener('click', searchRecipe);
