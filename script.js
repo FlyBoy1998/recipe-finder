@@ -8,18 +8,29 @@ const loader = document.querySelector('.loader');
 
 let userInput = '';
 let index = 0;
-let pages = [];
+let recipeData = await fetchData();
+let pages = paginate(recipeData);
+console.log(pages);
 
 async function fetchData() {
+    try {
+        const url = `https://api.spoonacular.com/recipes/complexSearch?query=${userInput}&apiKey=${apiKey}&number=24`;
+        const response = await fetch(url);
+        const data = await response.json();
+        const results = data.results;
+        return results;
+    } catch (error) {
+        console.log(error);
+        recipesContainer.innerHTML = 'Sorry, there was an error!'
+    }
+}
+
+
+
+function createRecipeElements(recipes) {
     recipesContainer.innerHTML = '';
     loader.classList.add('loader-visible');
-    const url = `https://api.spoonacular.com/recipes/complexSearch?query=${userInput}&apiKey=${apiKey}&number=24`;
-    const response = await fetch(url);
-    const data = await response.json();
-    const results = data.results;
-    pages = paginate(results);
-    console.log(pages);
-    const recipesContent = pages[index].map((recipe) => {
+    const recipesContent = recipes.map((recipe) => {
         const {image: imageSrc, title} = recipe;
         return `
             <div class="recipe">
@@ -32,14 +43,13 @@ async function fetchData() {
     }).join('');
     loader.classList.remove('loader-visible');
     recipesContainer.innerHTML = recipesContent;
-    displayButtons(paginationButtons, pages, index);
 }
 
 function searchRecipe(e) {
-    e.preventDefault();
     userInput = recipeInput.value;
+    e.preventDefault();
     console.log(userInput);
-    fetchData();
+    setupUI();
 }
 
 function paginate(recipes) {
@@ -60,5 +70,16 @@ function displayButtons(container, pages, activeIndex) {
     })
     container.innerHTML = btns.join('');
 }
+
+function setupUI() {
+    createRecipeElements(pages[index]);
+    displayButtons(paginationButtons, pages, index);
+}
+
+paginationButtons.addEventListener('click', (e) => {
+    index = parseInt(e.target.dataset.index);
+    console.log(index);
+    setupUI();
+})
 
 searchButton.addEventListener('click', searchRecipe);
